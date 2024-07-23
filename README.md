@@ -7,3 +7,7 @@
 - Variables
 - Conditional Statements
 - Loops
+- Objects and Classes
+- Lists
+- Functions
+- State Management
