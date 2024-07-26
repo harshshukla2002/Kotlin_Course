@@ -1,4 +1,8 @@
 package com.example.inheritance
 
-class Secondary {
+open class Secondary : BaseClass() {
+    override fun roles() {
+        super.roles()
+        println("Member of secondary")
+    }
 }
