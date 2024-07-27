@@ -11,3 +11,5 @@
 - Lists
 - Functions
 - State Management
+- API Callings
+- ViewModals
