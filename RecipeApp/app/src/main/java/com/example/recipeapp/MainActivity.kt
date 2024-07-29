@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.recipeapp.ui.theme.RecipeAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -26,8 +27,10 @@ class MainActivity : ComponentActivity() {
                     .padding(20.dp)
                     .background(color = Color.Gray)
             ) {
+
+                val navController = rememberNavController()
                 RecipeAppTheme {
-                    RecipeScreen()
+                    RecipeApp(navController = navController)
                 }
             }
         }

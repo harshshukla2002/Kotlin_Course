@@ -1,6 +1,7 @@
 package com.example.recipeapp
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -18,15 +19,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 
 @Composable
-fun RecipeScreen(modifier: Modifier = Modifier) {
+fun RecipeScreen(
+    modifier: Modifier = Modifier,
+    navigationToDetail: (Category) -> Unit,
+    viewState: MainViewModel.RecipeState
+) {
     val recipeViewModel: MainViewModel = viewModel()
-    val viewState by recipeViewModel.categoriesState
 
     Box(modifier = Modifier.fillMaxSize()) {
         when {
@@ -45,7 +48,7 @@ fun RecipeScreen(modifier: Modifier = Modifier) {
             }
 
             else -> {
-                CategoryScreen(categories = viewState.list)
+                CategoryScreen(categories = viewState.list, navigationToDetail)
             }
         }
 
@@ -54,7 +57,7 @@ fun RecipeScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun CategoryScreen(categories: List<Category>) {
+fun CategoryScreen(categories: List<Category>, navigationToDetail: (Category) -> Unit) {
     LazyVerticalGrid(
         GridCells.Fixed(2),
         modifier = Modifier
@@ -62,17 +65,18 @@ fun CategoryScreen(categories: List<Category>) {
             .padding(top = 22.dp),
     ) {
         items(categories) { category ->
-            CategoryItem(category = category)
+            CategoryItem(category = category, navigationToDetail)
         }
     }
 }
 
 @Composable
-fun CategoryItem(category: Category) {
+fun CategoryItem(category: Category, navigationToDetail: (Category) -> Unit) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable { navigationToDetail(category) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
